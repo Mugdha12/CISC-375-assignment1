@@ -23,7 +23,6 @@ function NewRequest(req, res) {
     	png:'image/png',
     	json:'application/json'
     };
-
     if(req.method === "GET")
     {
 		if (filename === '') {
@@ -47,7 +46,6 @@ function NewRequest(req, res) {
     }
     else if(req.method === "POST")
     {
-    	
 		if(filename ==="sign-up")
 		{
 			let body ='';
@@ -88,9 +86,7 @@ function NewRequest(req, res) {
 				}
 			});
 			
-		});
-				
-		
+		});		
 		}
     	
 	}
