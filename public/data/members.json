@@ -28,5 +28,53 @@
         "lname": "Wong",
         "gender": "F",
         "birthday": "1999-08-12"
+    },
+    "dand9530@stthomas.edu": {
+        "fname": "Mugdha",
+        "lname": "Danda",
+        "gender": "F",
+        "birthday": "1998-11-12"
+    },
+    "savi2586@stthomas.edu": {
+        "fname": "Pam",
+        "lname": "Savira",
+        "gender": "F",
+        "birthday": "1999-05-07"
+    },
+    "bust6340@stthomas.edu": {
+        "fname": "Mitzi",
+        "lname": "Bustamante-Chica",
+        "gender": "F",
+        "birthday": "1999-03-21"
+    },
+    "name@example.com": {
+        "fname": "jane",
+        "lname": "doe",
+        "gender": "F",
+        "birthday": "1999-01-01"
+    },
+    "dand@ex.com": {
+        "fname": "Nani",
+        "lname": "Danda",
+        "gender": "F",
+        "birthday": "1999-01-01"
+    },
+    "ja@ex.com": {
+        "fname": "j",
+        "lname": "j",
+        "gender": "F",
+        "birthday": "1999-01-01"
+    },
+    "da@ex.com": {
+        "fname": "Jane",
+        "lname": "d",
+        "gender": "F",
+        "birthday": "1999-01-01"
+    },
+    "shar9074@stthomas.edu": {
+        "fname": "Amina",
+        "lname": "Sharif",
+        "gender": "F",
+        "birthday": "1997-06-28"
     }
 }

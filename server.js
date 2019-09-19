@@ -2,52 +2,102 @@
 var fs = require('fs');
 var http = require('http');
 var path = require('path');
-
+var queryString = require('querystring');
 var port = 8000;
 var public_dir = path.join(__dirname, 'public');
+var jsonPath= path.join(public_dir, "data", "members.json");
+var rand;
+fs.readFile(jsonPath, (err, data) => {
+	rand=JSON.parse(data);
+});
 
 function NewRequest(req, res) {
-    var filename = req.url.substring(1);
-    if (filename === '') {
-        filename = 'index.html';
+    
+	var filename = req.url.substring(1);
+	var fullpath = path.join(public_dir, filename);
+    var extensions = {
+    	js:'text/javascript',
+    	html: 'text/html',
+    	css:'text/css',
+    	jpg:'image/jpeg',
+    	png:'image/png',
+    	json:'application/json'
+    };
+
+    if(req.method === "GET")
+    {
+		
+		if (filename === '') {
+			filename = 'index.html';
+		}
+    	fs.readFile(fullpath, (err, data) => {
+	       if (err) {
+	            res.writeHead(404, {'Content-Type': 'text/plain'});
+	            res.write('Oh no! Could not find file');
+	            res.end();
+	       }
+	       else {
+	            location = filename.indexOf(".");
+				hold=filename.substring(location+1);
+				//console.log(hold,extensions[hold]);
+	            res.writeHead(200,{'Content-Type':extensions[hold]});
+	           	res.write(data);
+	          	res.end();
+	       }
+	    });
     }
-    var fullpath = path.join(public_dir, filename);
-    fs.readFile(fullpath, (err, data) => {
-       if (err) {
-            res.writeHead(404, {'Content-Type': 'text/plain'});
-            res.write('Oh no! Could not find file');
-            res.end();
-       }
-       else {
-            location = filename.indexOf(".");
-			if(filename.substring(location+1) === "html")
-			{
-				res.writeHead(200,{'Content-Type':'text/html'});
-			}
-			else if (filename.substring(location+1) === "js") 
-			{
-				res.writeHead(200,{'Content-Type':'text/javascript'});
-			}
-			else if (filename.substring(location+1) === "css")
-			{
-				res.writeHead(200,{'Content-Type':'text/css'});
-			}
-			else if (filename.substring(location+1) === "jpg")
-			{
-				res.writeHead(200,{'Content-Type':'image/jpeg'});
-			}
-			else if (filename.substring(location+1) === "png")
-			{
-				res.writeHead(200,{'Content-Type':'image/png'});
-			}
-			else
-			{
-				res.writeHead(200,{'Content-Type':'application/json'});
-			}
-           res.write(data);
-           res.end();
-       }
-    });
+    else if(req.method === "POST")
+    {
+    	
+		if(filename ==="sign-up")
+		{
+			let body ='';
+				
+					req.on('data', function(chunk){
+						body += chunk;
+					});
+					req.on('end',() => {
+						var formData=queryString.parse(body);
+						
+						var holdemail = (formData['email']);
+						var jsonobject = {
+							"fname": formData['fname'],
+							"lname": formData['lname'],
+							"gender": formData['gender'].charAt(0),
+							"birthday": formData['birthday']
+						};
+						rand[holdemail]=jsonobject;
+						fs.writeFile(jsonPath, JSON.stringify(rand, null, 4), function(err){
+							if(err){
+								return console.log(err);
+							}
+							else
+							{
+								filenameAnother = 'join.html';
+								fPath=path.join(public_dir, filenameAnother);
+								fs.readFile(fPath, (err, inData) => {
+								if (err) {
+									res.writeHead(404, {'Content-Type': 'text/plain'});
+									res.write('Oh no! Could not find file');
+									res.end();
+								}
+								else {
+									res.writeHead(200,{'Content-Type':'text/html'});
+									res.write(inData);
+									res.end();
+								}
+								});
+							}
+						});
+			
+					});
+				
+		
+		}
+    	
+	}
+
+    
 }
 
 var server = http.createServer(NewRequest);
