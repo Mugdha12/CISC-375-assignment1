@@ -53,44 +53,43 @@ function NewRequest(req, res) {
 		{
 			let body ='';
 				
-					req.on('data', function(chunk){
-						body += chunk;
+			req.on('data', function(chunk){
+			body += chunk;
+			});
+			req.on('end',() => {
+			var formData=queryString.parse(body);
+			var holdemail = (formData['email']);
+			var jsonobject = {
+					"fname": formData['fname'],
+					"lname": formData['lname'],
+					"gender": formData['gender'].charAt(0),
+					"birthday": formData['birthday']
+					};
+			rand[holdemail]=jsonobject;
+			fs.writeFile(jsonPath, JSON.stringify(rand, null, 4), function(err){
+			if(err){
+				return console.log(err);
+				}
+			else
+				{
+				filenameAnother = 'join.html';
+				fPath=path.join(public_dir, filenameAnother);
+				fs.readFile(fPath, (err, inData) => {
+				if (err) {
+					res.writeHead(404, {'Content-Type': 'text/plain'});
+					res.write('Oh no! Could not find file');
+					res.end();
+					}
+					else {
+						res.writeHead(200,{'Content-Type':'text/html'});
+						res.write(inData);
+						res.end();
+						}
 					});
-					req.on('end',() => {
-						var formData=queryString.parse(body);
-						
-						var holdemail = (formData['email']);
-						var jsonobject = {
-							"fname": formData['fname'],
-							"lname": formData['lname'],
-							"gender": formData['gender'].charAt(0),
-							"birthday": formData['birthday']
-						};
-						rand[holdemail]=jsonobject;
-						fs.writeFile(jsonPath, JSON.stringify(rand, null, 4), function(err){
-							if(err){
-								return console.log(err);
-							}
-							else
-							{
-								filenameAnother = 'join.html';
-								fPath=path.join(public_dir, filenameAnother);
-								fs.readFile(fPath, (err, inData) => {
-								if (err) {
-									res.writeHead(404, {'Content-Type': 'text/plain'});
-									res.write('Oh no! Could not find file');
-									res.end();
-								}
-								else {
-									res.writeHead(200,{'Content-Type':'text/html'});
-									res.write(inData);
-									res.end();
-								}
-								});
-							}
-						});
+				}
+			});
 			
-					});
+		});
 				
 		
 		}
