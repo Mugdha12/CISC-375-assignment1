@@ -76,5 +76,17 @@
         "lname": "Sharif",
         "gender": "F",
         "birthday": "1998-06-28"
+    },
+    "JaneDoe@example.com": {
+        "fname": "Jane",
+        "lname": "Doe",
+        "gender": "F",
+        "birthday": "1999-01-01"
+    },
+    "madhavi.bojedla@gmail.com": {
+        "fname": "Madhavi Latha",
+        "lname": "Bojedla",
+        "gender": "F",
+        "birthday": "1977-01-14"
     }
 }

@@ -26,9 +26,9 @@ function NewRequest(req, res) {
 
     if(req.method === "GET")
     {
-		
 		if (filename === '') {
-			filename = 'index.html';
+			filename = "index.html";
+			fullpath = path.join(public_dir, filename);
 		}
     	fs.readFile(fullpath, (err, data) => {
 	       if (err) {
@@ -39,7 +39,6 @@ function NewRequest(req, res) {
 	       else {
 	            location = filename.indexOf(".");
 				hold=filename.substring(location+1);
-				//console.log(hold,extensions[hold]);
 	            res.writeHead(200,{'Content-Type':extensions[hold]});
 	           	res.write(data);
 	          	res.end();
