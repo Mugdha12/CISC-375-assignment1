@@ -14,7 +14,7 @@ fs.readFile(jsonPath, (err, data) => {
 function NewRequest(req, res) {
     
 	var filename = req.url.substring(1);
-	var fullpath = path.join(public_dir, filename);
+	var fullpath;
     var extensions = {
     	js:'text/javascript',
     	html: 'text/html',
@@ -27,8 +27,8 @@ function NewRequest(req, res) {
     {
 		if (filename === '') {
 			filename = "index.html";
-			fullpath = path.join(public_dir, filename);
 		}
+		fullpath = path.join(public_dir, filename);
     	fs.readFile(fullpath, (err, data) => {
 	       if (err) {
 	            res.writeHead(404, {'Content-Type': 'text/plain'});
